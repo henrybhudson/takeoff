@@ -6,6 +6,7 @@ const errorHandler = require('./middleware/errorHandler');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
