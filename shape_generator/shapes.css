@@ -1,0 +1,17 @@
+.canvas {
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    padding: 30px;
+    border: 1px solid white;
+}   
+
+body {
+    background-color: rgb(6, 1, 48);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
