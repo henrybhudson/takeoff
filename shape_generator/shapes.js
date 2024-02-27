@@ -292,7 +292,7 @@ function drawPlanet2() {
 
         //create a radial gradient
         //https://www.w3schools.com/jsref/canvas_createradialgradient.asp
-        const grd = ctx.createRadialGradient(centerX, centerY, radius - (radius / 6), centerX, centerY, radius);
+        const grd = ctx.createRadialGradient(centerX, centerY, radius - (radius / 15), centerX, centerY, radius);
         grd.addColorStop(0, colour);
         grd.addColorStop(0.3, "rgb(0, 0, 0, 0.1)");
 
@@ -306,21 +306,23 @@ function drawPlanet2() {
             //draw texture pattern (e.g., noise)
             textureCtx.fillStyle = "transparent";
             textureCtx.fillRect(0, 0, textureCanvas.width, textureCanvas.height);
-            textureCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            for (var i = 0; i < 200; i++) {
+            textureCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+
+            //change i limit for more or less texture
+            for (var i = 0; i < 5000; i++) {
                 var x = Math.random() * textureCanvas.width;
                 var y = Math.random() * textureCanvas.height;
                 var radius = Math.random() * 6;
                 textureCtx.beginPath();
-                textureCtx.arc(x, y, radius, 0, Math.PI * 2);
+                textureCtx.arc(x, y, radius * 1.2, 0, Math.PI * 2);
                 textureCtx.fill();
             }
 
-            return ctx.createPattern(textureCanvas, 'repeat');
+            return ctx.createPattern(textureCanvas, "repeat");
         }
 
         //create a texture pattern
-        var texture = createTexture(radius);
+        var texture = createTexture(radius * 3);
 
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
