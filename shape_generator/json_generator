@@ -1,0 +1,70 @@
+const fs = require('fs');
+
+//array holding the possible astronomical objects
+const star_colours = ["#9db4ff", "#a2b9ff", "#a7bcff", "#aabfff", "#afc3ff", "#baccff", "#c0d1ff", "#cad8ff", "#e4e8ff", "#edeeff", "#fbf8ff", "#fff9f9", "#fff5ec", "#fff4e8", "#fff1df", "#ffebd1", "#ffd7ae", "#ffc690", "#ffbe7f", "#ffbb7b", "#ffbb7b", "#ffc100", "#ff9a00", "#ff7400"];
+const planet_colours = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "white", "grey", "brown"]
+const moon_colours = ["#b3b3b3", "#a6a6a6", "#999999", "#8c8c8c", "#808080", "#737373"]
+
+//generate 25 of each object type in each json    
+var stars = [];
+for (let i = 0; i < 25; i++) {
+    let star = {
+        "color": star_colours[Math.floor(Math.random() * star_colours.length)],
+        "radius": Math.floor(Math.random() * 100) + 1,
+        "coor": null
+    }
+    stars.push(star);
+    console.log(star);
+
+    const jsonData = JSON.stringify(stars);
+
+    fs.writeFile('output.json', jsonData, (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log('Stars added to JSON');
+    });
+};
+
+var planets = [];
+for (let i = 0; i < 25; i++) {
+    let planet = {
+        "color": planet_colours[Math.floor(Math.random() * planet_colours.length)],
+        "radius": Math.floor(Math.random() * 100) + 1,
+        "coor": null
+    }
+    planets.push(planet);
+    console.log(planet);
+
+    const jsonData = JSON.stringify(planets);
+
+    fs.writeFile('output.json', jsonData, (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log('Planets added to JSON');
+    });
+};
+
+var moons = [];
+for (let i = 0; i < 25; i++) {
+    let moon = {
+        "color": moon_colours[Math.floor(Math.random() * moon_colours.length)],
+        "radius":  Math.floor(Math.random() * 100) + 1,
+        "coor": null
+    }
+    moons.push(moon);
+    console.log(moon);
+
+    const jsonData = JSON.stringify(moons);
+
+    fs.writeFile('output.json', jsonData, (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log('Moons added to JSON');
+    });
+}

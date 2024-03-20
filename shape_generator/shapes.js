@@ -277,6 +277,7 @@ function drawPlanet2() {
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
 
+        //array of planet colours
         planet_colours = ["#2E8B57", "#8B4513", "#D2B48C", "#778899", "#800080", "#8B0000", "#CD853F", "#ADD8E6", "#D8BFD8"]
         colour = planet_colours[Math.floor(Math.random() * planet_colours.length)];
 
@@ -294,6 +295,7 @@ function drawPlanet2() {
         //https://www.w3schools.com/jsref/canvas_createradialgradient.asp
         const grd = ctx.createRadialGradient(centerX, centerY, radius - (radius / 15), centerX, centerY, radius);
         grd.addColorStop(0, colour);
+        //change value on end for more or less transparency of texture
         grd.addColorStop(0.3, "rgb(0, 0, 0, 0.1)");
 
         //function to create a texture pattern
