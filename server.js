@@ -1,14 +1,14 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const { logger, logEvents } = require('./middleware/logger');
-const errorHandler = require('./middleware/errorHandler');
+const { logger, logEvents } = require('./server/middleware/logger');
+const errorHandler = require('./server/middleware/errorHandler');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const corsOptions = require('./config/corsOptions');
-const connectToDatabase = require('./config/dbConnection');
+const corsOptions = require('./server/config/corsOptions');
+const connectToDatabase = require('./server/config/dbConnection');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('./server/node_modules/dotenv/lib/main').config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,7 +20,8 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use('/', express.static(path.join(__dirname, 'client')));
-app.use('/', require('./routes/root.js'));
+app.use('/', require('./server/routes/root'));
+app.use('/users/', require('./server/routes/userRoutes'));
 
 // Deal with the 404 errors
 app.all('*', (req, res) => {
