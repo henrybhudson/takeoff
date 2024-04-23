@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Takeoff - Home</title>
+        <link rel="stylesheet" href="main.css">
+        <script src="https://kit.fontawesome.com/7420bc63cf.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+        <div class="home-grid">
+                <div class="dropdown-container">
+                        <div class="universe-select">
+                                <select>
+                                        <option value="0"></option>
+                                        <option value="1" id="selected-universe">UNIVERSE 1</option>
+                                        <option value="2">UNIVERSE 2</option>
+                                        <option value="3">UNIVERSE 3</option>
+                                </select>
+                        </div>
+                </div>
+                <div class="slider-container">
+                        <div class="slider">
+                                <div class="slider-arrow">
+                                        <i class="fas fa-chevron-left"></i>
+                                </div>
+                                <div class="slider-text">
+                                        STARS
+                                </div>
+                                <div class="slider-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                </div>
+                        </div>
+                </div>
+                <div class="collection-container">
+
+                </div>
+                <div class="button-container">
+                        <div class="study-button no-inner-border">
+                                <div class="study-title">STUDY</div>
+                        </div>
+                </div>
+                <div class="nav-container">
+                        <div class="nav-icon">
+                                <i class="fas fa-users"></i>
+                        </div>
+                        <div class="nav-icon">
+                                <i class="fas fa-home"></i>
+                        </div>
+                        <div class="nav-icon">
+                                <i class="fas fa-user"></i>
+                        </div>
+                </div>
+        </div>
+</body>
+<script>
+        /* Dropdown Code, heavily altered but mainly sourced from W3Schools */
+        document.querySelector('#selected-universe').setAttribute('selected', 'selected');
+
+        /* Get the select element */
+        const selectElement = document.querySelector(".universe-select select");
+        const numOptions = selectElement.length;
+
+        /* Create a new div that will act as the selected item */
+        const selectedDiv = document.createElement("div");
+        selectedDiv.setAttribute("class", "selected");
+        selectedDiv.innerHTML = selectElement.options[selectElement.selectedIndex].innerHTML;
+        selectElement.parentNode.appendChild(selectedDiv);
+
+        /* Create a new div that will contain the options */
+        const optionDiv = document.createElement("div");
+        optionDiv.setAttribute("class", "select-options select-hide");
+
+        for (let i = 1; i < numOptions; i++) {
+                /* For each option in the original select element, create a new div that will act as an option */
+                const optionElement = document.createElement("div");
+                optionElement.innerHTML = selectElement.options[i].innerHTML;
+
+                optionElement.addEventListener("click", function (e) {
+                        /* When an item is clicked, update the original select box and the selected item */
+                        const selectBox = this.parentNode.parentNode.querySelector("select");
+                        const selectLength = selectBox.length;
+                        const selectedDiv = this.parentNode.previousSibling;
+
+                        for (let j = 0; j < selectLength; j++) {
+                                if (selectBox.options[j].innerHTML == this.innerHTML) {
+                                        selectBox.selectedIndex = j;
+                                        selectedDiv.innerHTML = this.innerHTML;
+                                        const sameAsSelectedDiv = this.parentNode.getElementsByClassName("same-as-selection");
+
+                                        for (let k = 0; k < sameAsSelectedDiv.length; k++) {
+                                                sameAsSelectedDiv[k].removeAttribute("class");
+                                        }
+
+                                        this.setAttribute("class", "same-as-selection");
+                                        break;
+                                }
+                        }
+                        selectedDiv.click();
+                });
+                optionDiv.appendChild(optionElement);
+        }
+
+        selectElement.parentNode.appendChild(optionDiv);
+
+        selectedDiv.addEventListener("click", function (e) {
+                /* When the select box is clicked, close any other select boxes and open / close the current select box */
+                e.stopPropagation();
+                closeAllSelect(this);
+                this.nextSibling.classList.toggle("select-hide");
+                this.classList.toggle("select-arrow-active");
+        });
+
+        const closeAllSelect = (el) => {
+                /* A function that will close all select boxes in the document, except the current select box */
+                const selectItems = document.getElementsByClassName("select-options");
+                const selectedItems = document.getElementsByClassName("selected");
+                const selectItemsLength = selectItems.length;
+                const selectedItemsLength = selectedItems.length;
+                const arrNo = [];
+
+                for (let n = 0; n < selectedItemsLength; n++) {
+                        if (el == selectedItems[n]) {
+                                arrNo.push(n);
+                        } else {
+                                selectedItems[n].classList.remove("select-arrow-active");
+                        }
+                }
+
+                for (let p = 0; p < selectItemsLength; p++) {
+                        if (!arrNo.includes(p)) {
+                                selectItems[p].classList.add("select-hide");
+                        }
+                }
+        }
+
+        /* If the user clicks anywhere outside the select box, then close all select boxes */
+        document.addEventListener("click", closeAllSelect);
+</script>
+
+</html>
