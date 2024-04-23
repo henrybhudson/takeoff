@@ -14,21 +14,19 @@ const Login = () => {
         const handleLogin = async (e) => {
                 e.preventDefault();
 
-                // Send the email and password to the API.
-                var response;
+                // Send the email and password to the API. We're on localhost so don't worry about sending over HTTPS.
                 try {
-                        response = await API.post('/users/login', { email, password });
-                } catch (error) {
-                        console.error(error);
-                }
+                        const response = await API.post('/users/login', { email, password });
 
-                // If the login is successful, set the user in the user context and store the user in the local storage.
-                if (response.status === 200) {
-                        setLoginState(true);
-                        delete response.data.password;
-                        localStorage.setItem('user', JSON.stringify(response.data));
-                } else {
-                        alert('Invalid email or password.');
+                        // If the login is successful, set the user in the user context and store the user in the local storage.
+                        if (response.status === 200) {
+                                setLoginState(true);
+                                delete response.data.password;
+                                localStorage.setItem('user', JSON.stringify(response.data));
+                                alert('Successfully logged in to takeoff.');
+                        }
+                } catch (error) {
+                        alert(error.response.data.message);
                 }
         };
 
