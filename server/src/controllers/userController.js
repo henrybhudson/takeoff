@@ -17,7 +17,32 @@ const createUser = handleAsync(async (req, res) => {
 });
 
 const login = handleAsync(async (req, res) => {
-        return res.status(200).json({ message: 'Login successful.' });
+        const { email, password } = req.body;
+
+        try {
+                // Check if the user with that email exists
+                var user = await User.findOne({ email });
+
+                if (!user) {
+                        return res.status(400).json({ message: 'Invalid email or password.' });
+                }
+
+                const passwordIsValid = await bcrypt.compare(password, user.password);
+
+                if (!passwordIsValid) {
+                        return res.status(400).json({ message: 'Invalid email or password.' });
+                }
+
+                // Remove password from the user object before sending it to the client
+                delete user._doc.password;
+
+                res.status(200).json({
+                        message: 'Login successful.',
+                        user
+                });
+        } catch (error) {
+                res.status(500).json({ message: 'An error occurred while logging in.', error });
+        }
 });
 
 const register = handleAsync(async (req, res) => {
