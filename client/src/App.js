@@ -1,13 +1,12 @@
-import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
+import React from 'react';
+import Routes from './routes';
+import UserContextProvider from './userContext';
 
-function App() {
+const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-
-      </Route>
-    </Routes>
+    <UserContextProvider>
+      <Routes />
+    </UserContextProvider>
   );
 }
 
